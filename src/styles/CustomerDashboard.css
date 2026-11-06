@@ -1,0 +1,168 @@
+
+/* Customer Dashboard */
+
+.customer-dashboard {
+  min-height: 100vh;
+  background: #fff8fb;
+  font-family: Arial, sans-serif;
+  color: #3d2631;
+}
+
+/* Navigation */
+
+.dashboard-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 7%;
+  background: white;
+  box-shadow: 0 2px 12px rgba(80, 20, 45, 0.06);
+}
+
+.dashboard-navbar .logo {
+  font-size: 25px;
+  font-weight: bold;
+  color: #3d2631;
+  text-decoration: none;
+}
+
+.dashboard-navbar .logo span {
+  color: #e71968;
+}
+
+.logout-btn {
+  background: #e71968;
+  color: white;
+  border: none;
+  padding: 11px 25px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #c91458;
+  transform: translateY(-2px);
+}
+
+/* Welcome section */
+
+.dashboard-welcome {
+  margin: 35px 7% 30px;
+  padding: 55px 45px;
+  border-radius: 20px;
+  background: linear-gradient(110deg, #ffe0ed, #f7b5d0);
+}
+
+.dashboard-welcome > p:first-child {
+  color: #d41460;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.dashboard-welcome h1 {
+  font-size: 36px;
+  margin: 15px 0;
+  color: #462536;
+}
+
+.dashboard-welcome p:last-child {
+  font-size: 16px;
+  color: #70475a;
+}
+
+/* Dashboard content */
+
+.dashboard-content {
+  padding: 10px 7% 60px;
+}
+
+.dashboard-content h2 {
+  font-size: 25px;
+  margin-bottom: 25px;
+  color: #462536;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.dashboard-card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(80, 20, 45, 0.07);
+  border: 1px solid #f9e2ec;
+  transition: 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(231, 25, 104, 0.12);
+}
+
+.dashboard-card h3 {
+  color: #d41460;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.dashboard-card p {
+  color: #806a74;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.dashboard-btn {
+  display: inline-block;
+  background: #e71968;
+  color: white;
+  text-decoration: none;
+  padding: 11px 22px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.dashboard-btn:hover {
+  background: #c91458;
+}
+
+/* Mobile layout */
+
+@media (max-width: 650px) {
+  .dashboard-navbar {
+    padding: 18px 5%;
+  }
+
+  .dashboard-navbar .logo {
+    font-size: 21px;
+  }
+
+  .dashboard-welcome {
+    margin: 25px 5%;
+    padding: 35px 25px;
+  }
+
+  .dashboard-welcome h1 {
+    font-size: 27px;
+  }
+
+  .dashboard-content {
+    padding: 10px 5% 40px;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-card {
+    padding: 25px;
+  }
+}
