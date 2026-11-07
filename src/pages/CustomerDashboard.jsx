@@ -56,7 +56,7 @@ function CustomerDashboard() {
             <h3>My Appointments</h3>
             <p>View and manage your salon bookings.</p>
             <Link to="/my-appointments" className="dashboard-btn">
-              View Appointments
+              My Appointments
             </Link>
           </div>
 
@@ -68,13 +68,15 @@ function CustomerDashboard() {
             </Link>
           </div>
 
-          <div className="dashboard-card">
-            <h3>Deposit Status</h3>
-            <p>Keep track of your appointment deposits.</p>
-            <Link to="/my-appointments" className="dashboard-btn">
-              Check Status
-            </Link>
-          </div>
+          
+
+<div className="dashboard-card">
+  <h3>Payment Information</h3>
+  <p>Find out how payments are made for your salon services.</p>
+  <Link to="/payment-information" className="dashboard-btn">
+    View Payment Information
+  </Link>
+</div>
 
         </div>
       </section>

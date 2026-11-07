@@ -5,6 +5,8 @@ import Register from './pages/Register'
 import Services from './pages/Services'
 import Booking from './pages/Booking'
 import CustomerDashboard from './pages/CustomerDashboard'
+import MyAppointments from './pages/MyAppointments'
+import PaymentInformation from './pages/PaymentInformation'
 import './App.css'
 
 function Home() {
@@ -125,10 +127,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/my-appointments" element={<MyAppointments />} />
         <Route
           path="/customer-dashboard"
           element={<CustomerDashboard />}
         />
+        <Route path="/payment-information" element={<PaymentInformation />} />
       </Routes>
     </BrowserRouter>
   )

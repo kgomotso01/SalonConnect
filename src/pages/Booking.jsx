@@ -1,14 +1,24 @@
 
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Booking() {
+  const navigate = useNavigate()
+
   const [services, setServices] = useState([])
   const [service, setService] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
+  const [bookedTimes, setBookedTimes] = useState([])
+  const [availabilityError, setAvailabilityError] = useState('')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+
+  const availableTimes = [
+    '09:00', '10:00', '11:00', '12:00',
+    '13:00', '14:00', '15:00', '16:00'
+  ]
 
   useEffect(() => {
     async function getServices() {
@@ -31,14 +41,93 @@ function Booking() {
     getServices()
   }, [])
 
+  // Check which times are already booked for the selected date
+  useEffect(() => {
+    async function getBookedTimes() {
+      if (!date) {
+        setBookedTimes([])
+        setAvailabilityError('')
+        return
+      }
+
+      setAvailabilityError('')
+      setBookedTimes([])
+
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/appointments/availability?date=${date}`
+        )
+
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error('Could not check available times.')
+        }
+
+        setBookedTimes(data)
+      } catch (error) {
+        setAvailabilityError(
+          'Could not check available times. Please try again.'
+        )
+      }
+    }
+
+    getBookedTimes()
+  }, [date])
+
   const selectedService = services.find(
     (item) => item.service_id === Number(service)
   )
 
-  function handleBooking(e) {
+  async function handleBooking(e) {
     e.preventDefault()
+    setMessage('')
 
-    alert('Booking request submitted! The salon owner will review your appointment.')
+    const token = localStorage.getItem('accessToken')
+
+    if (!token) {
+      navigate('/login', { state: { from: '/booking' } })
+      return
+    }
+
+    setSubmitting(true)
+
+    try {
+      const response = await fetch('http://localhost:5000/api/appointments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          service_id: Number(service),
+          appointment_date: date,
+          appointment_time: time
+        })
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setMessage(data.message || 'Could not submit your booking.')
+
+        // Refresh the booked times if the selected slot was taken
+        if (response.status === 409) {
+          setBookedTimes((previous) => [...previous, time])
+        }
+
+        return
+      }
+alert('Your appointment request was submitted successfully! The salon owner will review your booking.')
+
+      // Mark this time as booked and keep the booking details visible
+      setBookedTimes((previous) => [...previous, time])
+
+    } catch (error) {
+      setMessage('Could not connect to the server. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -57,6 +146,10 @@ function Booking() {
         <Link to="/login" className="login-btn">
           Login
         </Link>
+
+         <div className="back-dashboard">
+  <Link to="/customer-dashboard">← Back to Dashboard</Link>
+</div>
       </nav>
 
       <div className="booking-header">
@@ -97,7 +190,10 @@ function Booking() {
             type="date"
             value={date}
             min={new Date().toLocaleDateString('en-CA')}
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => {
+              setDate(e.target.value)
+              setTime('')
+            }}
             required
           />
 
@@ -106,17 +202,26 @@ function Booking() {
             value={time}
             onChange={(e) => setTime(e.target.value)}
             required
+            disabled={!date || availabilityError !== ''}
           >
             <option value="">Choose a time</option>
-            <option value="09:00">09:00</option>
-            <option value="10:00">10:00</option>
-            <option value="11:00">11:00</option>
-            <option value="12:00">12:00</option>
-            <option value="13:00">13:00</option>
-            <option value="14:00">14:00</option>
-            <option value="15:00">15:00</option>
-            <option value="16:00">16:00</option>
+
+            {availableTimes.map((slot) => {
+              const isBooked = bookedTimes.includes(slot)
+
+              return (
+                <option
+                  key={slot}
+                  value={slot}
+                  disabled={isBooked}
+                >
+                  {slot} {isBooked ? '(Booked)' : ''}
+                </option>
+              )
+            })}
           </select>
+
+          {availabilityError && <p>{availabilityError}</p>}
 
           <div className="booking-summary">
             <h3>Booking Summary</h3>
@@ -143,9 +248,17 @@ function Booking() {
           <button
             type="submit"
             className="confirm-booking-btn"
-            disabled={loading || services.length === 0}
+            disabled={
+              loading ||
+              submitting ||
+              services.length === 0 ||
+              !date ||
+              !time ||
+              bookedTimes.includes(time) ||
+              availabilityError !== ''
+            }
           >
-            Confirm Booking
+            {submitting ? 'Submitting...' : 'Confirm Booking'}
           </button>
 
         </form>

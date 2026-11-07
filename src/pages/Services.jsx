@@ -57,9 +57,11 @@ function Services() {
           <Link to="/#contact">Contact</Link>
         </div>
 
-        <Link to="/login" className="login-btn">
-          Login
-        </Link>
+        <div className="back-dashboard-container">
+  <Link to="/customer-dashboard" className="dashboard-btn">
+    ← Back to Dashboard
+  </Link>
+</div>
       </nav>
 
       {/* Services heading */}
@@ -79,6 +81,7 @@ function Services() {
           client feels cared for and at home.
         </span>
       </div>
+      
 
       {/* Service cards */}
       <div className="service-container">

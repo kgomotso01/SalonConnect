@@ -1,0 +1,164 @@
+
+/* My Appointments Page */
+
+.my-appointments-page {
+  min-height: 100vh;
+  background: #fff8fb;
+  font-family: Arial, sans-serif;
+  color: #3d2631;
+}
+
+/* Appointments container */
+
+.appointments-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 25px 60px;
+}
+
+.appointments-container > p {
+  text-align: center;
+  color: #806a74;
+  margin: 30px 0;
+}
+
+/* Appointment cards */
+
+.appointment-card {
+  background: white;
+  padding: 25px 30px;
+  margin-bottom: 20px;
+  border: 1px solid #f9e2ec;
+  border-left: 5px solid #e71968;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(80, 20, 45, 0.06);
+  transition: 0.3s;
+}
+
+.appointment-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(231, 25, 104, 0.10);
+}
+
+.appointment-card h2 {
+  color: #d41460;
+  font-size: 21px;
+  margin-bottom: 18px;
+}
+
+.appointment-card p {
+  color: #806a74;
+  font-size: 15px;
+  margin: 12px 0;
+}
+
+.appointment-card strong {
+  color: #3d2631;
+}
+
+/* Empty appointments message */
+
+.appointments-container > div:not(.appointment-card) {
+  background: white;
+  text-align: center;
+  padding: 45px 25px;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(80, 20, 45, 0.06);
+}
+
+.appointments-container > div h2 {
+  color: #d41460;
+  margin-bottom: 12px;
+}
+
+.appointments-container > div p {
+  color: #806a74;
+  margin-bottom: 22px;
+}
+
+/* Pink button */
+
+.appointments-container a {
+  display: inline-block;
+  background: #e71968;
+  color: white;
+  text-decoration: none;
+  padding: 11px 25px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.appointments-container a:hover {
+  background: #c91458;
+}
+
+/* Mobile layout */
+
+@media (max-width: 600px) {
+  .appointments-container {
+    padding: 0 15px 40px;
+  }
+
+  .appointment-card {
+    padding: 22px;
+  }
+
+  .appointment-card h2 {
+    font-size: 19px;
+  }
+}
+/* Appointment Status Labels */
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-declined {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-cancelled {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.status-completed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+.back-dashboard {
+  margin-top: 20px;
+}
+
+.back-dashboard a {
+  display: inline-block;
+  background: #e71968;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.back-dashboard a:hover {
+  background: #c91458;
+}
