@@ -139,17 +139,12 @@ alert('Your appointment request was submitted successfully! The salon owner will
         </Link>
 
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/services">Services</Link>
+         <Link to="/customer-dashboard">Dashboard</Link>
         </div>
 
-        <Link to="/login" className="login-btn">
-          Login
-        </Link>
+       
 
-         <div className="back-dashboard">
-  <Link to="/customer-dashboard">← Back to Dashboard</Link>
-</div>
+        
       </nav>
 
       <div className="booking-header">

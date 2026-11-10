@@ -23,6 +23,9 @@ app.use('/api/services', serviceRoutes);
 const appointmentRoutes = require('./routes/appointments')
 app.use('/api/appointments', appointmentRoutes)
 
+const staffRoutes = require('./routes/staff')
+app.use('/api/staff', staffRoutes)
+
 // MySQL connection
 const db = mysql.createPool({
     host: process.env.DB_HOST,

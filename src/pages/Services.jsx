@@ -51,17 +51,12 @@ function Services() {
         </Link>
 
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/services">Services</Link>
-          <Link to="/#about">About</Link>
-          <Link to="/#contact">Contact</Link>
+          
+          
+          <Link to="/customer-dashboard">Dashboard</Link>
         </div>
 
-        <div className="back-dashboard-container">
-  <Link to="/customer-dashboard" className="dashboard-btn">
-    ← Back to Dashboard
-  </Link>
-</div>
+        
       </nav>
 
       {/* Services heading */}

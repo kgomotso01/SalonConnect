@@ -37,4 +37,16 @@ function customerOnly(req, res, next) {
   next()
 }
 
-module.exports = { verifyToken, customerOnly }
+// Allow only the salon owner
+function ownerOnly(req, res, next) {
+  if (req.user.role !== 'OWNER') {
+    return res.status(403).json({
+      message: 'Only the salon owner can access this feature.'
+    });
+  }
+
+  next();
+}
+
+
+module.exports = { verifyToken, customerOnly, ownerOnly };

@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Services from './pages/Services'
@@ -7,7 +7,23 @@ import Booking from './pages/Booking'
 import CustomerDashboard from './pages/CustomerDashboard'
 import MyAppointments from './pages/MyAppointments'
 import PaymentInformation from './pages/PaymentInformation'
+import Contact from './pages/Contact'
+import OwnerDashboard from './pages/OwnerDashboard'
+import OwnerAppointments from './pages/OwnerAppointments'
+import ReviewBookings from './pages/ReviewBookings'
 import './App.css'
+
+// Protect pages that only the salon owner can access
+function OwnerRoute({ children }) {
+  const token = localStorage.getItem('accessToken')
+  const user = JSON.parse(localStorage.getItem('user') || 'null')
+
+  if (!token || !user || user.role !== 'OWNER') {
+    return <Navigate to="/login" replace />
+  }
+
+  return children
+}
 
 function Home() {
   const navigate = useNavigate()
@@ -33,8 +49,7 @@ function Home() {
         <div className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/services">Services</Link>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <Link to="/contact">Contact</Link>
         </div>
 
         <div className="auth-buttons">
@@ -49,7 +64,6 @@ function Home() {
       </nav>
 
       <section className="hero" id="home">
-
         <div className="hero-content">
           <p className="welcome">
             BEAUTY • STYLE • CONFIDENCE
@@ -81,11 +95,9 @@ function Home() {
             alt="A stylist braiding a customer's hair in a salon"
           />
         </div>
-
       </section>
 
       <section className="about" id="about">
-
         <div className="about-text">
           <p className="welcome">WHY CHOOSE US?</p>
 
@@ -105,10 +117,9 @@ function Home() {
           <p>✓ Choose your preferred service</p>
           <p>✓ Keep track of your bookings</p>
         </div>
-
       </section>
 
-      <footer id="contact">
+      <footer>
         <h2>Salon<span>Connect.</span></h2>
         <p>Beauty, style and confidence.</p>
         <p>© 2026 SalonConnect. All rights reserved.</p>
@@ -128,11 +139,44 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/my-appointments" element={<MyAppointments />} />
+        <Route path="/contact" element={<Contact />} />
+
+        <Route
+          path="/owner-dashboard"
+          element={
+            <OwnerRoute>
+              <OwnerDashboard />
+            </OwnerRoute>
+          }
+        />
+
+        <Route
+          path="/owner-appointments"
+          element={
+            <OwnerRoute>
+              <OwnerAppointments />
+            </OwnerRoute>
+          }
+        />
+
+        <Route
+          path="/review-bookings"
+          element={
+            <OwnerRoute>
+              <ReviewBookings />
+            </OwnerRoute>
+          }
+        />
+
         <Route
           path="/customer-dashboard"
           element={<CustomerDashboard />}
         />
-        <Route path="/payment-information" element={<PaymentInformation />} />
+
+        <Route
+          path="/payment-information"
+          element={<PaymentInformation />}
+        />
       </Routes>
     </BrowserRouter>
   )

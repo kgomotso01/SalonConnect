@@ -45,10 +45,7 @@ function PaymentInformation() {
 
         </div>
 
-        <Link to="/customer-dashboard" className="back-payment-btn">
-          Back to Dashboard
-        </Link>
-
+       
       </section>
 
     </div>
