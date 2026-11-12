@@ -1,16 +1,125 @@
-# React + Vite
+# SalonConnect
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About the Project
 
-Currently, two official plugins are available:
+SalonConnect is a web-based hair salon booking and management system. It helps customers book appointments and allows the salon owner to manage bookings more easily.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Customers can view salon services, book appointments and track their booking status. The salon owner can approve or decline bookings, assign staff members and manage completed appointments.
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- JavaScript
+- HTML
+- CSS
+- Node.js
+- Express.js
+- MySQL
+- Git and GitHub
 
-## Expanding the ESLint configuration
+## Main Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Customer Features
+- Customer registration and login.
+- View available salon services and prices.
+- Book appointments by selecting a service, date and time.
+- View appointment details and booking status.
+- Cancel pending appointments.
+- View assigned staff members after approval.
+- View payment information.
+- View salon contact details.
+
+### Salon Owner Features
+- Owner login and dashboard.
+- View all appointments.
+- View pending, approved and completed appointments.
+- Approve or decline booking requests.
+- Assign staff members to appointments.
+- Mark appointments as completed.
+
+## Staff Members
+
+The system includes five salon staff members:
+
+- Lebo
+- Karabo
+- Peace
+- Thandeka
+- Lindiwe
+
+The salon owner assigns a staff member when approving a booking.
+
+## Payment Method
+
+Customers pay cash at the salon after receiving the service. Online payments are not currently supported.
+
+## Database
+
+MySQL is used to store:
+- Customer and owner accounts.
+- Salon services.
+- Staff members.
+- Appointment information.
+
+## Running the Project Locally
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/kgomotso01/SalonConnect.git
+```
+
+### 2. Open the project folder
+
+```bash
+cd SalonConnect
+```
+
+### 3. Install frontend dependencies
+
+```bash
+npm install
+```
+
+### 4. Install backend dependencies
+
+```bash
+cd backend
+npm install
+```
+
+### 5. Configure the database
+
+Create a MySQL database called `salonconnect`.
+
+Create a `.env` file inside the backend folder and add your database connection details:
+
+```env
+DB_HOST=localhost
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_NAME=salonconnect
+PORT=5000
+JWT_SECRET=your_secret_key
+```
+
+Create the required database tables and insert the initial services and staff members.
+
+### 6. Start the backend
+
+From the backend folder, run:
+
+```bash
+npm start
+```
+
+### 7. Start the frontend
+
+Open another terminal in the main project folder and run:
+
+```bash
+npm run dev
+```
+
+Open the local address shown in the terminal to access SalonConnect.
+
