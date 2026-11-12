@@ -13,7 +13,6 @@ function Contact() {
 
         <div className="nav-links">
           <Link to="/">Home</Link>
-         
         </div>
       </nav>
 
@@ -61,9 +60,11 @@ function Contact() {
 
           <div className="contact-card">
             <h3>Salon Address</h3>
-           <p>15 Daniel Malan Ave, Florida Park, Roodepoort, 1709</p>
+            <p>15 Daniel Malan Ave, Florida Park, Roodepoort, 1709</p>
             <a
-            href="https://www.google.com/maps/search/?api=1&query=15+Daniel+Malan+Ave+Florida+Park+Roodepoort+1709+South+Africa"
+              href="https://www.google.com/maps/search/?api=1&query=15+Daniel+Malan+Ave+Florida+Park+Roodepoort+1709+South+Africa"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               View Location
             </a>
@@ -71,7 +72,22 @@ function Contact() {
 
         </div>
 
-       
+        {/* Salon Opening Hours */}
+        <div className="opening-hours">
+          <h2>Salon Opening Hours</h2>
+
+          <div className="hours-list">
+            <div>
+              <span>Monday – Saturday</span>
+              <strong>09:00 – 16:00</strong>
+            </div>
+
+            <div>
+              <span>Sunday</span>
+              <strong>Closed</strong>
+            </div>
+          </div>
+        </div>
 
       </section>
 

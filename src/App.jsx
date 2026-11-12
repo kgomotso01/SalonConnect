@@ -119,6 +119,24 @@ function Home() {
         </div>
       </section>
 
+      {/* Salon Opening Hours */}
+      <section className="opening-hours">
+        <p className="welcome">VISIT OUR SALON</p>
+        <h2>Salon Opening Hours</h2>
+
+        <div className="hours-list">
+          <div>
+            <span>Monday – Saturday</span>
+            <strong>09:00 – 16:00</strong>
+          </div>
+
+          <div>
+            <span>Sunday</span>
+            <strong>Closed</strong>
+          </div>
+        </div>
+      </section>
+
       <footer>
         <h2>Salon<span>Connect.</span></h2>
         <p>Beauty, style and confidence.</p>
