@@ -108,7 +108,7 @@ router.put('/:id/review', verifyToken, ownerOnly, async (req, res) => {
     }
 
     const [appointments] = await db.query(
-      `SELECT appointment_id
+      `SELECT appointment_id, customer_id
        FROM appointments
        WHERE appointment_id = ? AND status = 'PENDING'`,
       [appointmentId]
@@ -119,6 +119,8 @@ router.put('/:id/review', verifyToken, ownerOnly, async (req, res) => {
         message: 'Pending appointment not found.'
       })
     }
+
+    const customerId = appointments[0].customer_id
 
     if (status === 'APPROVED') {
       if (!staff_id) {
@@ -154,6 +156,17 @@ router.put('/:id/review', verifyToken, ownerOnly, async (req, res) => {
         [appointmentId]
       )
     }
+
+    // Notify the customer about the booking decision
+    const message = status === 'APPROVED'
+      ? `Your appointment #${appointmentId} has been approved!`
+      : `Your appointment #${appointmentId} has been declined.`
+
+    await db.query(
+      `INSERT INTO notifications (user_id, appointment_id, message)
+       VALUES (?, ?, ?)`,
+      [customerId, appointmentId, message]
+    )
 
     res.json({
       message: status === 'APPROVED'
@@ -226,7 +239,7 @@ router.put('/:id/cancel', verifyToken, customerOnly, async (req, res) => {
   } catch (error) {
     console.error('Error cancelling appointment:', error)
     res.status(500).json({
-      message: 'Could not cancel your appointment.'
+      message: 'Could not cancel the appointment.'
     })
   }
 })
@@ -282,6 +295,27 @@ router.post('/', verifyToken, customerOnly, async (req, res) => {
         appointment_time
       ]
     )
+
+    // Find the salon owner
+    const [owners] = await db.query(
+      `SELECT user_id
+       FROM users
+       WHERE role = 'OWNER'
+       LIMIT 1`
+    )
+
+    // Notify the owner about the new booking
+    if (owners.length > 0) {
+      await db.query(
+        `INSERT INTO notifications (user_id, appointment_id, message)
+         VALUES (?, ?, ?)`,
+        [
+          owners[0].user_id,
+          result.insertId,
+          `You have received a new booking! Appointment #${result.insertId} is waiting for your review.`
+        ]
+      )
+    }
 
     res.status(201).json({
       message: 'Appointment request submitted successfully! The salon owner will review your booking.',

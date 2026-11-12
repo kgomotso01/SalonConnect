@@ -41,7 +41,6 @@ function Booking() {
     getServices()
   }, [])
 
-  // Check which times are already booked for the selected date
   useEffect(() => {
     async function getBookedTimes() {
       if (!date) {
@@ -83,6 +82,39 @@ function Booking() {
     e.preventDefault()
     setMessage('')
 
+    // Check that all appointment details are provided
+    if (!service || !date || !time) {
+      setMessage('Please select a service, date and time.')
+      return
+    }
+
+    // Check that the selected service exists
+    if (!selectedService) {
+      setMessage('Please select a valid service.')
+      return
+    }
+
+    // Check that the appointment date is not in the past
+    const today = new Date()
+    const selectedDate = new Date(`${date}T00:00:00`)
+    today.setHours(0, 0, 0, 0)
+
+    if (selectedDate < today) {
+      setMessage('Please select today or a future date.')
+      return
+    }
+
+    // Check that the selected time is still available
+    if (bookedTimes.includes(time)) {
+      setMessage('This time is already booked. Please choose another time.')
+      return
+    }
+
+    if (availabilityError) {
+      setMessage('Please check available times before booking.')
+      return
+    }
+
     const token = localStorage.getItem('accessToken')
 
     if (!token) {
@@ -111,16 +143,15 @@ function Booking() {
       if (!response.ok) {
         setMessage(data.message || 'Could not submit your booking.')
 
-        // Refresh the booked times if the selected slot was taken
         if (response.status === 409) {
           setBookedTimes((previous) => [...previous, time])
         }
 
         return
       }
-alert('Your appointment request was submitted successfully! The salon owner will review your booking.')
 
-      // Mark this time as booked and keep the booking details visible
+      alert('Your appointment request was submitted successfully! The salon owner will review your booking.')
+
       setBookedTimes((previous) => [...previous, time])
 
     } catch (error) {
@@ -139,12 +170,8 @@ alert('Your appointment request was submitted successfully! The salon owner will
         </Link>
 
         <div className="nav-links">
-         <Link to="/customer-dashboard">Dashboard</Link>
+          <Link to="/customer-dashboard">Dashboard</Link>
         </div>
-
-       
-
-        
       </nav>
 
       <div className="booking-header">
@@ -188,6 +215,7 @@ alert('Your appointment request was submitted successfully! The salon owner will
             onChange={(e) => {
               setDate(e.target.value)
               setTime('')
+              setMessage('')
             }}
             required
           />
@@ -195,7 +223,10 @@ alert('Your appointment request was submitted successfully! The salon owner will
           <label>Appointment Time</label>
           <select
             value={time}
-            onChange={(e) => setTime(e.target.value)}
+            onChange={(e) => {
+              setTime(e.target.value)
+              setMessage('')
+            }}
             required
             disabled={!date || availabilityError !== ''}
           >

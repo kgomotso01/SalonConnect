@@ -26,6 +26,9 @@ app.use('/api/appointments', appointmentRoutes)
 const staffRoutes = require('./routes/staff')
 app.use('/api/staff', staffRoutes)
 
+const notificationRoutes = require('./routes/notifications')
+app.use('/api/notifications', notificationRoutes)
+
 // MySQL connection
 const db = mysql.createPool({
     host: process.env.DB_HOST,
